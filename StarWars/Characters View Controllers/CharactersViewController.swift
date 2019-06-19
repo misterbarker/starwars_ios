@@ -23,15 +23,8 @@ class CharactersViewController: UIViewController {
         
         title = NSLocalizedString("Star Wars Characters", comment: "Character list title")
         
-        print("registered for notifications")
         NotificationCenter.default.addObserver(self, selector: #selector(handleDataResetNotification(_:)), name: .dataResetNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleDataFetchFailedNotification(_:)), name: .dataFetchFailedNotification, object: nil)
-        
-        configureView()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         
         StarWarsDataService.shared.fetchData()
         configureView()

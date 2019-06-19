@@ -47,7 +47,6 @@ public class StarWarsDataService {
 extension StarWarsDataService: BaseOperationDelegate {
     
     func operation(operation: BaseOperation, failedWith error: Error) {
-        print("Error: \(error)")
         NotificationCenter.default.post(name: .dataFetchFailedNotification, object: error.localizedDescription)
     }
 }
