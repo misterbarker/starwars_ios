@@ -10,16 +10,18 @@ import UIKit
 
 extension UIImage {
     
-    static func symbol(for affiliation: CharacterAffiliation) -> UIImage? {
+    static func symbol(for affiliation: String) -> UIImage? {
         switch affiliation {
-        case .FIRST_ORDER:
+        case "First Order":
             return UIImage(named: "first_order_symbol")
-        case .JEDI:
+        case "Jedi":
             return UIImage(named: "jedi_symbol")
-        case .RESISTANCE:
+        case "Resistance":
             return UIImage(named: "resistance_symbol")
-        case .SITH:
+        case "Sith":
             return UIImage(named: "sith_symbol")
+        default:
+            return nil
         }
     }
 }

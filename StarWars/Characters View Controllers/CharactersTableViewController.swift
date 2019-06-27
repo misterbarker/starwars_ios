@@ -7,21 +7,47 @@
 //
 
 import UIKit
+import CoreData
 
 class CharactersTableViewController: UITableViewController {
+    
+    internal var characters: [StarWarsCharacter] = []
 
+    // MARK: - View lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         tableView.tableFooterView = UIView()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handleDataServiceDidFetchDataNotification(_:)),
+                                               name: .dataServiceDidFetchDataNotification,
+                                               object: nil)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadCharacters { self.tableView.reloadData() }
+    }
+    
+    func loadCharacters(_ completion: ()->()) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
         
-        NotificationCenter.default.addObserver(self, selector: #selector(handleDataResetNotification(_:)), name: .dataResetNotification, object: nil)
+        let request = StarWarsCharacter.fetchRequest() as NSFetchRequest<StarWarsCharacter>
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \StarWarsCharacter.firstName, ascending: true)]
+        
+        let context = appDelegate.persistentContainer.viewContext
+        let records = try? context.fetch(request)
+        characters = records ?? []
+        
+        completion()
     }
 
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return DataStore.shared.records?.count ?? 0
+        return characters.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -29,7 +55,7 @@ class CharactersTableViewController: UITableViewController {
             fatalError("Expected cell type: CharacterTableViewCell")
         }
         
-        cell.character = DataStore.shared.records?[indexPath.row]
+        cell.character = characters[indexPath.row]
         return cell
     }
 
@@ -40,7 +66,7 @@ class CharactersTableViewController: UITableViewController {
             guard let controller = segue.destination as? CharacterDetailViewController else { return }
             
             if let index = tableView.indexPathForSelectedRow?.row {
-                controller.character = DataStore.shared.records?[index]
+                controller.character = characters[index]
             }
         }
     }
@@ -48,7 +74,11 @@ class CharactersTableViewController: UITableViewController {
     // MARK: - Handle notifications
     
     @objc
-    func handleDataResetNotification(_ notification: Notification) {
-        DispatchQueue.main.async { self.tableView.reloadData() }
+    func handleDataServiceDidFetchDataNotification(_ notification: Notification) {
+        DispatchQueue.main.async {
+            self.loadCharacters {
+                self.tableView.reloadData()
+            }
+        }
     }
 }

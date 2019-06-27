@@ -11,7 +11,7 @@ import UIKit
 class ParseDataOperation: BaseOperation {
 
     var data: Data?
-    var individuals: [StarWarsCharacter]?
+    var characters: [SWCharacter]?
     
     override func main() {
         guard isCancelled == false else {
@@ -27,8 +27,8 @@ class ParseDataOperation: BaseOperation {
         _isExecuting = true
         
         do {
-            let info = try JSONDecoder().decode(StarWarsCharacters.self, from: json)
-            individuals = info.individuals
+            let info = try JSONDecoder().decode(SWCharacters.self, from: json)
+            characters = info.individuals
         } catch {
             delegate?.operation(operation: self, failedWith: error)
         }

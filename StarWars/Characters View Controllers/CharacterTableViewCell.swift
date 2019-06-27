@@ -11,9 +11,9 @@ import UIKit
 class CharacterTableViewCell: UITableViewCell {
     
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var pictureView: ImageURLView!
+    @IBOutlet weak var pictureView: UIImageView!
     @IBOutlet weak var outlineView: UIView!
-    @IBOutlet weak var backgroundPictureView: ImageURLView!
+    @IBOutlet weak var backgroundPictureView: UIImageView!
     
     
     var character: StarWarsCharacter? {
@@ -24,6 +24,8 @@ class CharacterTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleImageSavedNotification(_:)), name: .imageSavedNotification, object: nil)
 
         outlineView.layer.masksToBounds = false
         outlineView.layer.borderColor = UIColor.white.cgColor
@@ -42,8 +44,21 @@ class CharacterTableViewCell: UITableViewCell {
     internal func configureView() {
         nameLabel.text = character?.fullName
         
-        let url = character?.profilePictureUrl
-        pictureView.imageUrl = url
-        backgroundPictureView.imageUrl = url
+        if let imageName = character?.profilePictureName,
+            let imageUrl = character?.profilePictureUrl
+        {
+            let image = ImageManager.shared.getImage(name: imageName, at: imageUrl)
+            pictureView.image = image
+            backgroundPictureView.image = image
+        }
+    }
+    
+    @objc
+    func handleImageSavedNotification(_ notification: Notification) {
+        DispatchQueue.main.async {
+            if let imageName = notification.object as? String, self.character?.profilePictureName == imageName {
+                self.configureView()
+            }
+        }
     }
 }

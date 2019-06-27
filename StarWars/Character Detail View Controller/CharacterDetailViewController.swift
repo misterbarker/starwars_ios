@@ -10,7 +10,7 @@ import UIKit
 
 class CharacterDetailViewController: UIViewController {
     
-    @IBOutlet weak var backgroundImageView: ImageURLView!
+    @IBOutlet weak var backgroundImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var sensitivityLabel: UILabel!
@@ -27,6 +27,8 @@ class CharacterDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleImageSavedNotification(_:)), name: .imageSavedNotification, object: nil)
         sensitivityLabel.text = NSLocalizedString("Force Sensitive", comment: "Description of force sensitivity")
         createGradient()
     }
@@ -38,11 +40,15 @@ class CharacterDetailViewController: UIViewController {
 
     internal func configureView() {
         if isViewLoaded {
-            backgroundImageView.imageUrl = character?.profilePictureUrl
+            if let imageName = character?.profilePictureName, let imageUrl = character?.profilePictureUrl {
+                backgroundImageView.image = ImageManager.shared.getImage(name: imageName, at: imageUrl)
+            } else {
+                backgroundImageView.image = nil
+            }
             nameLabel.text = character?.fullName
             subtitleLabel.text = character?.ageDescription
             sensitivityLabel.isHidden = !(character?.forceSensitive ?? false)
-            affiliationLabel.text = character?.affiliationDescription
+            affiliationLabel.text = character?.affiliation
             
             if let affiliation = character?.affiliation {
                 affiliationImageView.image = UIImage.symbol(for: affiliation)
@@ -57,5 +63,14 @@ class CharacterDetailViewController: UIViewController {
         gradient.colors = [UIColor.black.withAlphaComponent(0).cgColor, UIColor.black.cgColor]
         gradient.frame = gradientView.bounds
         gradientView.layer.addSublayer(gradient)
+    }
+    
+    @objc
+    func handleImageSavedNotification(_ notification: Notification) {
+        DispatchQueue.main.async {
+            if let imageName = notification.object as? String, self.character?.profilePictureName == imageName {
+                self.configureView()
+            }
+        }
     }
 }

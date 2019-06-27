@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class CharactersViewController: UIViewController {
 
@@ -14,6 +15,7 @@ class CharactersViewController: UIViewController {
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
     var charactersController: CharactersTableViewController?
+    var managedObjectContext: NSManagedObjectContext?
     
     
     // MARK: - View lifecycle
@@ -23,10 +25,14 @@ class CharactersViewController: UIViewController {
         
         title = NSLocalizedString("Star Wars Characters", comment: "Character list title")
         
-        NotificationCenter.default.addObserver(self, selector: #selector(handleDataResetNotification(_:)), name: .dataResetNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleDataFetchFailedNotification(_:)), name: .dataFetchFailedNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleDataServiceDidFetchDataNotification(_:)), name: .dataServiceDidFetchDataNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleDataServiceFetchDidFailNotification(_:)), name: .dataServiceFetchDidFailNotification, object: nil)
         
-        StarWarsDataService.shared.fetchData()
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            managedObjectContext = appDelegate.persistentContainer.viewContext
+            StarWarsDataService.shared.fetchData(container: appDelegate.persistentContainer)
+        }
+        
         configureView()
     }
     
@@ -35,14 +41,25 @@ class CharactersViewController: UIViewController {
             loadingIndicator.isHidden = false
             charactersController?.view.superview?.isHidden = true
             zeroStateView.isHidden = true
-        } else if DataStore.shared.records?.count ?? 0 == 0 {
-            loadingIndicator.isHidden = true
-            charactersController?.view.superview?.isHidden = true
-            zeroStateView.isHidden = false
         } else {
-            loadingIndicator.isHidden = true
-            charactersController?.view.superview?.isHidden = false
-            zeroStateView.isHidden = true
+            do {
+                let request = StarWarsCharacter.fetchRequest() as NSFetchRequest<StarWarsCharacter>
+                let count = try managedObjectContext?.count(for: request)
+                if count == 0 {
+                    loadingIndicator.isHidden = true
+                    charactersController?.view.superview?.isHidden = true
+                    zeroStateView.isHidden = false
+                } else {
+                    loadingIndicator.isHidden = true
+                    charactersController?.view.superview?.isHidden = false
+                    zeroStateView.isHidden = true
+                }
+            } catch {
+                // show zero state
+                loadingIndicator.isHidden = true
+                charactersController?.view.superview?.isHidden = true
+                zeroStateView.isHidden = false
+            }
         }
     }
     
@@ -59,12 +76,12 @@ class CharactersViewController: UIViewController {
     // MARK: - Handle notifications
     
     @objc
-    func handleDataResetNotification(_ notification: Notification) {
+    func handleDataServiceDidFetchDataNotification(_ notification: Notification) {
         DispatchQueue.main.async { self.configureView() }
     }
     
     @objc
-    func handleDataFetchFailedNotification(_ notification: Notification) {
+    func handleDataServiceFetchDidFailNotification(_ notification: Notification) {
         DispatchQueue.main.async {
             self.configureView()
             

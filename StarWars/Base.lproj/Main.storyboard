@@ -77,7 +77,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="160"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="c8a-ZJ-fK0" customClass="ImageURLView" customModule="StarWars" customModuleProvider="target">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="c8a-ZJ-fK0">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="160"/>
                                         </imageView>
                                         <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vM5-iR-nxR">
@@ -106,7 +106,7 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dlr-PX-6i8">
                                                     <rect key="frame" x="157" y="0.0" width="60" height="60"/>
                                                     <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XA9-aE-bWN" customClass="ImageURLView" customModule="StarWars" customModuleProvider="target">
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XA9-aE-bWN">
                                                             <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                                                         </imageView>
                                                     </subviews>
@@ -149,10 +149,10 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
-                                    <outlet property="backgroundPictureView" destination="c8a-ZJ-fK0" id="jCc-fT-bQZ"/>
+                                    <outlet property="backgroundPictureView" destination="c8a-ZJ-fK0" id="WDF-Ev-oDs"/>
                                     <outlet property="nameLabel" destination="Sd8-ck-DJE" id="dA0-MX-dV0"/>
                                     <outlet property="outlineView" destination="dlr-PX-6i8" id="V8y-tq-oUr"/>
-                                    <outlet property="pictureView" destination="XA9-aE-bWN" id="1ZC-KX-wRM"/>
+                                    <outlet property="pictureView" destination="XA9-aE-bWN" id="TG8-Ve-h72"/>
                                     <segue destination="1uT-Ho-oRl" kind="show" identifier="showCharacterDetail" id="CKS-7s-fkp"/>
                                 </connections>
                             </tableViewCell>
@@ -175,7 +175,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="754"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tT5-aX-Teb" customClass="ImageURLView" customModule="StarWars" customModuleProvider="target">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tT5-aX-Teb">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="754"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JjI-dZ-gQ0">
@@ -255,7 +255,7 @@
                     <connections>
                         <outlet property="affiliationImageView" destination="NhW-y0-HW1" id="K5N-Lv-37F"/>
                         <outlet property="affiliationLabel" destination="jKv-cO-SCS" id="A66-Bh-efa"/>
-                        <outlet property="backgroundImageView" destination="tT5-aX-Teb" id="bkf-rf-pqB"/>
+                        <outlet property="backgroundImageView" destination="tT5-aX-Teb" id="dVh-8X-dTd"/>
                         <outlet property="gradientView" destination="JjI-dZ-gQ0" id="zcK-Z0-goa"/>
                         <outlet property="nameLabel" destination="2w6-S9-Upz" id="rzs-s6-W8Y"/>
                         <outlet property="sensitivityLabel" destination="lJP-us-Skw" id="Tk4-vn-67j"/>
