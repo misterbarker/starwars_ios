@@ -32,6 +32,7 @@
 		9656755022B8E0360028D7A1 /* ImageURLView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9656754F22B8E0360028D7A1 /* ImageURLView.swift */; };
 		9656758F22B914000028D7A1 /* CharacterDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9656758E22B914000028D7A1 /* CharacterDetailViewController.swift */; };
 		9656759522B91E3C0028D7A1 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9656759422B91E3C0028D7A1 /* Image.swift */; };
+		96F689E822C47821000809A4 /* StarWars.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 96F689E622C47821000809A4 /* StarWars.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		9656754F22B8E0360028D7A1 /* ImageURLView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageURLView.swift; sourceTree = "<group>"; };
 		9656758E22B914000028D7A1 /* CharacterDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailViewController.swift; sourceTree = "<group>"; };
 		9656759422B91E3C0028D7A1 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		96F689E722C47821000809A4 /* StarWars.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = StarWars.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,6 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				9656754A22B8D82D0028D7A1 /* DataStore.swift */,
+				96F689E622C47821000809A4 /* StarWars.xcdatamodeld */,
 				9656753A22B890B20028D7A1 /* StarWarsCharacter.swift */,
 				9656754322B8A2A90028D7A1 /* StarWarsDataService.swift */,
 				9656752D22B5FB8A0028D7A1 /* BaseOperation.swift */,
@@ -370,6 +373,7 @@
 			files = (
 				9656754722B8C2D40028D7A1 /* CharactersViewController.swift in Sources */,
 				9656752C22B5F4D80028D7A1 /* FetchDataOperation.swift in Sources */,
+				96F689E822C47821000809A4 /* StarWars.xcdatamodeld in Sources */,
 				9656754422B8A2A90028D7A1 /* StarWarsDataService.swift in Sources */,
 				9656754B22B8D82D0028D7A1 /* DataStore.swift in Sources */,
 				965674F922B5BFFB0028D7A1 /* AppDelegate.swift in Sources */,
@@ -714,6 +718,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		96F689E622C47821000809A4 /* StarWars.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				96F689E722C47821000809A4 /* StarWars.xcdatamodel */,
+			);
+			currentVersion = 96F689E722C47821000809A4 /* StarWars.xcdatamodel */;
+			path = StarWars.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 965674ED22B5BFFB0028D7A1 /* Project object */;
 }
